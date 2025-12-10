@@ -1,0 +1,33 @@
+﻿namespace Repository_CodeFirst.Migrations
+{
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class ModificareAutorSiAdaugareEditura_2025_10_20 : DbMigration
+    {
+        public override void Up()
+        {
+            CreateTable(
+                "dbo.Edituras",
+                c => new
+                    {
+                        id_editura = c.Int(nullable: false, identity: true),
+                        nume_editura = c.String(nullable: false, maxLength: 100),
+                        oras = c.String(maxLength: 50),
+                    })
+                .PrimaryKey(t => t.id_editura);
+            
+            AddColumn("dbo.Autor", "data_nasterii", c => c.DateTime(nullable: false));
+            AddColumn("dbo.Autor", "tara_origine", c => c.String());
+            AlterColumn("dbo.Autor", "nume_autor", c => c.String(nullable: false, maxLength: 200));
+        }
+        
+        public override void Down()
+        {
+            AlterColumn("dbo.Autor", "nume_autor", c => c.String(nullable: false, maxLength: 100));
+            DropColumn("dbo.Autor", "tara_origine");
+            DropColumn("dbo.Autor", "data_nasterii");
+            DropTable("dbo.Edituras");
+        }
+    }
+}

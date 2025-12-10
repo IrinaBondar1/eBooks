@@ -1,0 +1,29 @@
+﻿@model IEnumerable<eBooks_MVC.Models.CarteViewModel>
+
+<h2>Lista Cărți</h2>
+
+<p>
+    @Html.ActionLink("Adaugă carte nouă", "Create", null, new { @class = "btn btn-primary" })
+</p>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Titlu</th>
+            <th>Descriere</th>
+            <th>Autor</th>
+            <th>Acțiuni</th> 
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var carte in Model)
+        {
+            <tr>
+                <td>@carte.titlu</td>
+                <td>@carte.descriere</td>
+                <td>@carte.nume_autor</td>
+               
+            </tr>
+        }
+    </tbody>
+</table>

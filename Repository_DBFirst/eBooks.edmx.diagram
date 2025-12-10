@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ce05958a0b7b4f7e90155d2f5d3db641" Name="Diagram1">
+        <EntityTypeShape EntityType="eBooksModel.Autor" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="eBooksModel.Carte" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="eBooksModel.Categorie" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="eBooksModel.IstoricCitire" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="eBooksModel.Serie" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="eBooksModel.sysdiagram" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="eBooksModel.TipAbonament" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="eBooksModel.Utilizator" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="eBooksModel.FK_id_autor_id_carte" ManuallyRouted="false" />
+        <AssociationConnector Association="eBooksModel.FK_id_categorie_id_carte" ManuallyRouted="false" />
+        <AssociationConnector Association="eBooksModel.FK_id_serie_id_carte" ManuallyRouted="false" />
+        <AssociationConnector Association="eBooksModel.FK_id_carte_id_istoric" ManuallyRouted="false" />
+        <AssociationConnector Association="eBooksModel.FK_id_utilizator_id_istoric" ManuallyRouted="false" />
+        <AssociationConnector Association="eBooksModel.FK_id_tip_abonament_id_utilizator" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

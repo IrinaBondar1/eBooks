@@ -1,0 +1,12 @@
+﻿@model eBooks_MVC.Models.CarteViewModel
+
+<h2>Confirmare ștergere</h2>
+
+<p>Ești sigur că vrei să ștergi cartea: <strong>@Model.titlu</strong>?</p>
+
+@using (Html.BeginForm("Delete", "Carti", FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.id_carte)
+    <button type="submit" class="btn btn-danger">Șterge</button>
+    @Html.ActionLink("Renunță", "Index", null, new { @class = "btn btn-secondary" })
+}

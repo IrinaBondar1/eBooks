@@ -1,0 +1,51 @@
+﻿@model eBooks_MVC.Models.Api.AutorApiModel
+
+@{
+    ViewBag.Title = "Adauga autor";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.nume_autor, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.nume_autor, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.nume_autor)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.tara_origine, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.tara_origine, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.tara_origine)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.data_nasterii, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.data_nasterii, new { @class = "form-control", placeholder = "yyyy-MM-dd" })
+          
+                @Html.ValidationMessageFor(m => m.data_nasterii)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Salvează" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Înapoi la listă", "Index")
+</div>

@@ -1,0 +1,47 @@
+﻿@model eBooks_MVC.Models.CarteViewModel
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Detalii Carte</h4>
+    <hr />
+    
+    <div class="form-group">
+        @Html.LabelFor(m => m.titlu, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(m => m.titlu)
+            @Html.ValidationMessageFor(m => m.titlu)
+        </div>
+    </div>
+    
+    <div class="form-group">
+        @Html.LabelFor(m => m.descriere, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(m => m.descriere)
+            @Html.ValidationMessageFor(m => m.descriere)
+        </div>
+    </div>
+
+   
+    <div class="form-group">
+        @Html.LabelFor(m => m.id_autor, "Autor", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.id_autor, Model.Autori, "Selectează autorul", new { @class = "form-control" }
+            )
+            @Html.ValidationMessageFor(m => m.id_autor)
+        </div>
+    </div>
+
+   
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Salvează" class="btn btn-success" />
+        </div>
+    </div>
+</div>
+}
+

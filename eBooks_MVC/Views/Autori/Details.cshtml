@@ -1,0 +1,26 @@
+﻿@model eBooks_MVC.Models.AutorViewModel
+
+@{
+    ViewBag.Title = "Detalii autor";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    <h4>@Model.nume_autor</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Țara</dt>
+        <dd>@Model.tara_origine</dd>
+
+        <dt>Data nașterii</dt>
+        <dd>@Model.data_nasterii.ToShortDateString()</dd>
+
+        <dt>Activ</dt>
+        <dd>@Html.CheckBoxFor(m => m.activ, new { disabled = "disabled" })</dd>
+    </dl>
+</div>
+
+<p>
+    @Html.ActionLink("Înapoi la listă", "Index")
+</p>

@@ -1,0 +1,505 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="eBooksModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Autor">
+          <Key>
+            <PropertyRef Name="id_autor" />
+          </Key>
+          <Property Name="id_autor" Type="int" Nullable="false" />
+          <Property Name="nume_autor" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Carte">
+          <Key>
+            <PropertyRef Name="id_carte" />
+          </Key>
+          <Property Name="id_carte" Type="int" Nullable="false" />
+          <Property Name="titlu" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="id_autor" Type="int" Nullable="false" />
+          <Property Name="id_categorie" Type="int" Nullable="false" />
+          <Property Name="id_serie" Type="int" Nullable="false" />
+          <Property Name="descriere" Type="text" Nullable="false" />
+          <Property Name="nr_volum" Type="int" />
+        </EntityType>
+        <EntityType Name="Categorie">
+          <Key>
+            <PropertyRef Name="id_categorie" />
+          </Key>
+          <Property Name="id_categorie" Type="int" Nullable="false" />
+          <Property Name="denumire" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="descriere" Type="text" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IstoricCitire">
+          <Key>
+            <PropertyRef Name="id_istoric" />
+          </Key>
+          <Property Name="id_istoric" Type="int" Nullable="false" />
+          <Property Name="id_utilizator" Type="int" Nullable="false" />
+          <Property Name="id_carte" Type="int" Nullable="false" />
+          <Property Name="data_accesare" Type="datetime" Nullable="false" />
+          <Property Name="actiune" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Serie">
+          <Key>
+            <PropertyRef Name="id_serie" />
+          </Key>
+          <Property Name="id_serie" Type="int" Nullable="false" />
+          <Property Name="nume_serie" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="descriere" Type="text" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TipAbonament">
+          <Key>
+            <PropertyRef Name="id_tip_abonament" />
+          </Key>
+          <Property Name="id_tip_abonament" Type="int" Nullable="false" />
+          <Property Name="denumire" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="limita_carti_pe_luna" Type="int" />
+          <Property Name="acces_serii_complete" Type="bit" Nullable="false" />
+          <Property Name="permite_descarcare" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Utilizator">
+          <Key>
+            <PropertyRef Name="id_utilizator" />
+          </Key>
+          <Property Name="id_utilizator" Type="int" Nullable="false" />
+          <Property Name="nume_utilizator" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="parola" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="data_inregistrare" Type="date" Nullable="false" />
+          <Property Name="id_tip_abonament" Type="int" Nullable="false" />
+          <Property Name="carti_citite_luna" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_id_autor_id_carte">
+          <End Role="Carte" Type="Self.Carte" Multiplicity="1" />
+          <End Role="Carte1" Type="Self.Carte" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Carte">
+              <PropertyRef Name="id_carte" />
+            </Principal>
+            <Dependent Role="Carte1">
+              <PropertyRef Name="id_carte" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_id_carte_id_istoric">
+          <End Role="IstoricCitire" Type="Self.IstoricCitire" Multiplicity="1" />
+          <End Role="IstoricCitire1" Type="Self.IstoricCitire" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="IstoricCitire">
+              <PropertyRef Name="id_istoric" />
+            </Principal>
+            <Dependent Role="IstoricCitire1">
+              <PropertyRef Name="id_istoric" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_id_categorie_id_carte">
+          <End Role="Carte" Type="Self.Carte" Multiplicity="1" />
+          <End Role="Carte1" Type="Self.Carte" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Carte">
+              <PropertyRef Name="id_carte" />
+            </Principal>
+            <Dependent Role="Carte1">
+              <PropertyRef Name="id_carte" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_id_serie_id_carte">
+          <End Role="Carte" Type="Self.Carte" Multiplicity="1" />
+          <End Role="Carte1" Type="Self.Carte" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Carte">
+              <PropertyRef Name="id_carte" />
+            </Principal>
+            <Dependent Role="Carte1">
+              <PropertyRef Name="id_carte" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_id_tip_abonament_id_utilizator">
+          <End Role="Utilizator" Type="Self.Utilizator" Multiplicity="1" />
+          <End Role="Utilizator1" Type="Self.Utilizator" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Utilizator">
+              <PropertyRef Name="id_utilizator" />
+            </Principal>
+            <Dependent Role="Utilizator1">
+              <PropertyRef Name="id_utilizator" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_id_utilizator_id_istoric">
+          <End Role="IstoricCitire" Type="Self.IstoricCitire" Multiplicity="1" />
+          <End Role="IstoricCitire1" Type="Self.IstoricCitire" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="IstoricCitire">
+              <PropertyRef Name="id_istoric" />
+            </Principal>
+            <Dependent Role="IstoricCitire1">
+              <PropertyRef Name="id_istoric" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="eBooksModelStoreContainer">
+          <EntitySet Name="Autor" EntityType="Self.Autor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Carte" EntityType="Self.Carte" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categorie" EntityType="Self.Categorie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IstoricCitire" EntityType="Self.IstoricCitire" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Serie" EntityType="Self.Serie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipAbonament" EntityType="Self.TipAbonament" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Utilizator" EntityType="Self.Utilizator" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_id_autor_id_carte" Association="Self.FK_id_autor_id_carte">
+            <End Role="Carte" EntitySet="Carte" />
+            <End Role="Carte1" EntitySet="Carte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_id_carte_id_istoric" Association="Self.FK_id_carte_id_istoric">
+            <End Role="IstoricCitire" EntitySet="IstoricCitire" />
+            <End Role="IstoricCitire1" EntitySet="IstoricCitire" />
+          </AssociationSet>
+          <AssociationSet Name="FK_id_categorie_id_carte" Association="Self.FK_id_categorie_id_carte">
+            <End Role="Carte" EntitySet="Carte" />
+            <End Role="Carte1" EntitySet="Carte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_id_serie_id_carte" Association="Self.FK_id_serie_id_carte">
+            <End Role="Carte" EntitySet="Carte" />
+            <End Role="Carte1" EntitySet="Carte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_id_tip_abonament_id_utilizator" Association="Self.FK_id_tip_abonament_id_utilizator">
+            <End Role="Utilizator" EntitySet="Utilizator" />
+            <End Role="Utilizator1" EntitySet="Utilizator" />
+          </AssociationSet>
+          <AssociationSet Name="FK_id_utilizator_id_istoric" Association="Self.FK_id_utilizator_id_istoric">
+            <End Role="IstoricCitire" EntitySet="IstoricCitire" />
+            <End Role="IstoricCitire1" EntitySet="IstoricCitire" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="eBooksModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Autor">
+          <Key>
+            <PropertyRef Name="id_autor" />
+          </Key>
+          <Property Name="id_autor" Type="Int32" Nullable="false" />
+          <Property Name="nume_autor" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Carte">
+          <Key>
+            <PropertyRef Name="id_carte" />
+          </Key>
+          <Property Name="id_carte" Type="Int32" Nullable="false" />
+          <Property Name="titlu" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_autor" Type="Int32" Nullable="false" />
+          <Property Name="id_categorie" Type="Int32" Nullable="false" />
+          <Property Name="id_serie" Type="Int32" Nullable="false" />
+          <Property Name="descriere" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nr_volum" Type="Int32" />
+          <NavigationProperty Name="Carte1" Relationship="Self.FK_id_autor_id_carte" FromRole="Carte" ToRole="Carte1" />
+          <NavigationProperty Name="Carte2" Relationship="Self.FK_id_autor_id_carte" FromRole="Carte1" ToRole="Carte" />
+          <NavigationProperty Name="Carte11" Relationship="Self.FK_id_categorie_id_carte" FromRole="Carte" ToRole="Carte1" />
+          <NavigationProperty Name="Carte3" Relationship="Self.FK_id_categorie_id_carte" FromRole="Carte1" ToRole="Carte" />
+          <NavigationProperty Name="Carte12" Relationship="Self.FK_id_serie_id_carte" FromRole="Carte" ToRole="Carte1" />
+          <NavigationProperty Name="Carte4" Relationship="Self.FK_id_serie_id_carte" FromRole="Carte1" ToRole="Carte" />
+        </EntityType>
+        <EntityType Name="Categorie">
+          <Key>
+            <PropertyRef Name="id_categorie" />
+          </Key>
+          <Property Name="id_categorie" Type="Int32" Nullable="false" />
+          <Property Name="denumire" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descriere" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IstoricCitire">
+          <Key>
+            <PropertyRef Name="id_istoric" />
+          </Key>
+          <Property Name="id_istoric" Type="Int32" Nullable="false" />
+          <Property Name="id_utilizator" Type="Int32" Nullable="false" />
+          <Property Name="id_carte" Type="Int32" Nullable="false" />
+          <Property Name="data_accesare" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="actiune" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="IstoricCitire1" Relationship="Self.FK_id_carte_id_istoric" FromRole="IstoricCitire" ToRole="IstoricCitire1" />
+          <NavigationProperty Name="IstoricCitire2" Relationship="Self.FK_id_carte_id_istoric" FromRole="IstoricCitire1" ToRole="IstoricCitire" />
+          <NavigationProperty Name="IstoricCitire11" Relationship="Self.FK_id_utilizator_id_istoric" FromRole="IstoricCitire" ToRole="IstoricCitire1" />
+          <NavigationProperty Name="IstoricCitire3" Relationship="Self.FK_id_utilizator_id_istoric" FromRole="IstoricCitire1" ToRole="IstoricCitire" />
+        </EntityType>
+        <EntityType Name="Serie">
+          <Key>
+            <PropertyRef Name="id_serie" />
+          </Key>
+          <Property Name="id_serie" Type="Int32" Nullable="false" />
+          <Property Name="nume_serie" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descriere" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TipAbonament">
+          <Key>
+            <PropertyRef Name="id_tip_abonament" />
+          </Key>
+          <Property Name="id_tip_abonament" Type="Int32" Nullable="false" />
+          <Property Name="denumire" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="limita_carti_pe_luna" Type="Int32" />
+          <Property Name="acces_serii_complete" Type="Boolean" Nullable="false" />
+          <Property Name="permite_descarcare" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Utilizator">
+          <Key>
+            <PropertyRef Name="id_utilizator" />
+          </Key>
+          <Property Name="id_utilizator" Type="Int32" Nullable="false" />
+          <Property Name="nume_utilizator" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="parola" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="data_inregistrare" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="id_tip_abonament" Type="Int32" Nullable="false" />
+          <Property Name="carti_citite_luna" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Utilizator1" Relationship="Self.FK_id_tip_abonament_id_utilizator" FromRole="Utilizator" ToRole="Utilizator1" />
+          <NavigationProperty Name="Utilizator2" Relationship="Self.FK_id_tip_abonament_id_utilizator" FromRole="Utilizator1" ToRole="Utilizator" />
+        </EntityType>
+        <Association Name="FK_id_autor_id_carte">
+          <End Role="Carte" Type="Self.Carte" Multiplicity="1" />
+          <End Role="Carte1" Type="Self.Carte" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Carte">
+              <PropertyRef Name="id_carte" />
+            </Principal>
+            <Dependent Role="Carte1">
+              <PropertyRef Name="id_carte" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_id_categorie_id_carte">
+          <End Role="Carte" Type="Self.Carte" Multiplicity="1" />
+          <End Role="Carte1" Type="Self.Carte" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Carte">
+              <PropertyRef Name="id_carte" />
+            </Principal>
+            <Dependent Role="Carte1">
+              <PropertyRef Name="id_carte" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_id_serie_id_carte">
+          <End Role="Carte" Type="Self.Carte" Multiplicity="1" />
+          <End Role="Carte1" Type="Self.Carte" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Carte">
+              <PropertyRef Name="id_carte" />
+            </Principal>
+            <Dependent Role="Carte1">
+              <PropertyRef Name="id_carte" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_id_carte_id_istoric">
+          <End Role="IstoricCitire" Type="Self.IstoricCitire" Multiplicity="1" />
+          <End Role="IstoricCitire1" Type="Self.IstoricCitire" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="IstoricCitire">
+              <PropertyRef Name="id_istoric" />
+            </Principal>
+            <Dependent Role="IstoricCitire1">
+              <PropertyRef Name="id_istoric" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_id_utilizator_id_istoric">
+          <End Role="IstoricCitire" Type="Self.IstoricCitire" Multiplicity="1" />
+          <End Role="IstoricCitire1" Type="Self.IstoricCitire" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="IstoricCitire">
+              <PropertyRef Name="id_istoric" />
+            </Principal>
+            <Dependent Role="IstoricCitire1">
+              <PropertyRef Name="id_istoric" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_id_tip_abonament_id_utilizator">
+          <End Role="Utilizator" Type="Self.Utilizator" Multiplicity="1" />
+          <End Role="Utilizator1" Type="Self.Utilizator" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Utilizator">
+              <PropertyRef Name="id_utilizator" />
+            </Principal>
+            <Dependent Role="Utilizator1">
+              <PropertyRef Name="id_utilizator" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="eBooksEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Autors" EntityType="Self.Autor" />
+          <EntitySet Name="Cartes" EntityType="Self.Carte" />
+          <EntitySet Name="Categories" EntityType="Self.Categorie" />
+          <EntitySet Name="IstoricCitires" EntityType="Self.IstoricCitire" />
+          <EntitySet Name="Series" EntityType="Self.Serie" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="TipAbonaments" EntityType="Self.TipAbonament" />
+          <EntitySet Name="Utilizators" EntityType="Self.Utilizator" />
+          <AssociationSet Name="FK_id_autor_id_carte" Association="Self.FK_id_autor_id_carte">
+            <End Role="Carte" EntitySet="Cartes" />
+            <End Role="Carte1" EntitySet="Cartes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_id_categorie_id_carte" Association="Self.FK_id_categorie_id_carte">
+            <End Role="Carte" EntitySet="Cartes" />
+            <End Role="Carte1" EntitySet="Cartes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_id_serie_id_carte" Association="Self.FK_id_serie_id_carte">
+            <End Role="Carte" EntitySet="Cartes" />
+            <End Role="Carte1" EntitySet="Cartes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_id_carte_id_istoric" Association="Self.FK_id_carte_id_istoric">
+            <End Role="IstoricCitire" EntitySet="IstoricCitires" />
+            <End Role="IstoricCitire1" EntitySet="IstoricCitires" />
+          </AssociationSet>
+          <AssociationSet Name="FK_id_utilizator_id_istoric" Association="Self.FK_id_utilizator_id_istoric">
+            <End Role="IstoricCitire" EntitySet="IstoricCitires" />
+            <End Role="IstoricCitire1" EntitySet="IstoricCitires" />
+          </AssociationSet>
+          <AssociationSet Name="FK_id_tip_abonament_id_utilizator" Association="Self.FK_id_tip_abonament_id_utilizator">
+            <End Role="Utilizator" EntitySet="Utilizators" />
+            <End Role="Utilizator1" EntitySet="Utilizators" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="eBooksModelStoreContainer" CdmEntityContainer="eBooksEntities">
+          <EntitySetMapping Name="Autors">
+            <EntityTypeMapping TypeName="eBooksModel.Autor">
+              <MappingFragment StoreEntitySet="Autor">
+                <ScalarProperty Name="id_autor" ColumnName="id_autor" />
+                <ScalarProperty Name="nume_autor" ColumnName="nume_autor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cartes">
+            <EntityTypeMapping TypeName="eBooksModel.Carte">
+              <MappingFragment StoreEntitySet="Carte">
+                <ScalarProperty Name="id_carte" ColumnName="id_carte" />
+                <ScalarProperty Name="titlu" ColumnName="titlu" />
+                <ScalarProperty Name="id_autor" ColumnName="id_autor" />
+                <ScalarProperty Name="id_categorie" ColumnName="id_categorie" />
+                <ScalarProperty Name="id_serie" ColumnName="id_serie" />
+                <ScalarProperty Name="descriere" ColumnName="descriere" />
+                <ScalarProperty Name="nr_volum" ColumnName="nr_volum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="eBooksModel.Categorie">
+              <MappingFragment StoreEntitySet="Categorie">
+                <ScalarProperty Name="id_categorie" ColumnName="id_categorie" />
+                <ScalarProperty Name="denumire" ColumnName="denumire" />
+                <ScalarProperty Name="descriere" ColumnName="descriere" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IstoricCitires">
+            <EntityTypeMapping TypeName="eBooksModel.IstoricCitire">
+              <MappingFragment StoreEntitySet="IstoricCitire">
+                <ScalarProperty Name="id_istoric" ColumnName="id_istoric" />
+                <ScalarProperty Name="id_utilizator" ColumnName="id_utilizator" />
+                <ScalarProperty Name="id_carte" ColumnName="id_carte" />
+                <ScalarProperty Name="data_accesare" ColumnName="data_accesare" />
+                <ScalarProperty Name="actiune" ColumnName="actiune" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Series">
+            <EntityTypeMapping TypeName="eBooksModel.Serie">
+              <MappingFragment StoreEntitySet="Serie">
+                <ScalarProperty Name="id_serie" ColumnName="id_serie" />
+                <ScalarProperty Name="nume_serie" ColumnName="nume_serie" />
+                <ScalarProperty Name="descriere" ColumnName="descriere" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="eBooksModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipAbonaments">
+            <EntityTypeMapping TypeName="eBooksModel.TipAbonament">
+              <MappingFragment StoreEntitySet="TipAbonament">
+                <ScalarProperty Name="id_tip_abonament" ColumnName="id_tip_abonament" />
+                <ScalarProperty Name="denumire" ColumnName="denumire" />
+                <ScalarProperty Name="limita_carti_pe_luna" ColumnName="limita_carti_pe_luna" />
+                <ScalarProperty Name="acces_serii_complete" ColumnName="acces_serii_complete" />
+                <ScalarProperty Name="permite_descarcare" ColumnName="permite_descarcare" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Utilizators">
+            <EntityTypeMapping TypeName="eBooksModel.Utilizator">
+              <MappingFragment StoreEntitySet="Utilizator">
+                <ScalarProperty Name="id_utilizator" ColumnName="id_utilizator" />
+                <ScalarProperty Name="nume_utilizator" ColumnName="nume_utilizator" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="parola" ColumnName="parola" />
+                <ScalarProperty Name="data_inregistrare" ColumnName="data_inregistrare" />
+                <ScalarProperty Name="id_tip_abonament" ColumnName="id_tip_abonament" />
+                <ScalarProperty Name="carti_citite_luna" ColumnName="carti_citite_luna" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,23 @@
+﻿@model eBooks_MVC.Models.Api.AutorApiModel
+
+@{
+    ViewBag.Title = "Șterge autor";
+}
+
+<h2>Confirmă ștergerea</h2>
+
+<div>
+    <h4>@Model.nume_autor</h4>
+    <p>Țara: @Model.tara_origine</p>
+    <p>Data nașterii: @Model.data_nasterii</p>
+</div>
+
+@using (Html.BeginForm("DeleteConfirmed", "AutoriApi", new { id = Model.id_autor }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <p>Sigur vrei să ștergi acest autor?</p>
+
+    <input type="submit" value="Da, șterge" class="btn btn-danger" />
+    @Html.ActionLink("Anulează", "Index", null, new { @class = "btn btn-default" })
+}
