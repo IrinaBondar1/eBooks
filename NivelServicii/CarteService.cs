@@ -1,6 +1,7 @@
 ﻿using LibrarieModele;
 
 using NivelAccessDate;
+using NivelServicii.Cache;
 
 using System;
 using System.Collections.Generic;
@@ -12,36 +13,57 @@ namespace NivelServicii
 {
     public class CarteService : ICarteService
     {
-        private readonly CarteAccessor accessor;
-
-        public CarteService(CarteAccessor accessor)
+        private readonly CarteAccessor carteAccessor;
+        private readonly ICache cache;
+        public CarteService(CarteAccessor carteAccessor, ICache cache)
         {
-            this.accessor = accessor;
+            this.carteAccessor = carteAccessor;
+            this.cache = cache;
         }
 
         public List<Carte> GetAll()
         {
-            return accessor.GetAll();
+           string key = "carti_all";
+          if (cache.IsSet(key))
+          {
+             return cache.Get<List<Carte>>(key);
+          }
+          var carti = carteAccessor.GetAll();
+          cache.Set(key, carti);
+          return carti;
         }
 
         public Carte GetById(int id)
         {
-            return accessor.GetById(id);
+            string key = $"carte_{id}";
+            if (cache.IsSet(key))
+            {
+                return cache.Get<Carte>(key);
+            }
+            var carte = carteAccessor.GetById(id);
+            cache.Set(key, carte);
+            return carte;
         }
 
         public void Add(Carte carte)
         {
-            accessor.Add(carte);
+           carteAccessor.Add(carte);
+            cache.RemoveByPattern("carti");
+            cache.Remove("carti_all");
         }
 
         public void Update(Carte carte)
         {
-            accessor.Update(carte);
+            carteAccessor.Update(carte);
+            cache.RemoveByPattern("carte");
+            cache.Remove("carti_all");
         }
 
         public void Delete(int id)
         {
-            accessor.Delete(id);
+            carteAccessor.Delete(id);
+            cache.RemoveByPattern("carte");
+            cache.Remove("carti_all");
         }
     }
 }

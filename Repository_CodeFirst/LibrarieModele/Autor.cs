@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace LibrarieModele
 {
     [Table("Autor")]
+    [Serializable]
     public class Autor
     {
         [Key]

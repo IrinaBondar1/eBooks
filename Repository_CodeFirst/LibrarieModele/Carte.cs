@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace LibrarieModele
 {
     [Table("Carte")]
+    [Serializable] 
     public class Carte
     {
         [Key]

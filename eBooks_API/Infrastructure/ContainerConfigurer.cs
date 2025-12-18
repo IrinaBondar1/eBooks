@@ -4,6 +4,7 @@ using Autofac.Integration.WebApi;
 using NivelAccessDate;
 
 using NivelServicii;
+using NivelServicii.Cache;
 
 using Repository_CodeFirst;
 
@@ -45,6 +46,9 @@ namespace eBooks_API.Infrastructure
                    .As<ICarteService>()
                    .InstancePerLifetimeScope();
 
+            builder.RegisterType<MemoryCacheService>()
+                   .As<ICache>()
+                   .SingleInstance();
             /*
             // Singleton 
 

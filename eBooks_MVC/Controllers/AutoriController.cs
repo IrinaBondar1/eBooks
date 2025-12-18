@@ -16,7 +16,7 @@ namespace eBooks_MVC.Controllers
 {
     public class AutoriController : Controller
     {
-        private readonly IAutorService autorService = new AutorService();
+        private readonly IAutorService autorService;
 
         // GET: Autori
         public ActionResult Index()
