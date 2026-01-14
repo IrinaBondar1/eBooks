@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\Repository_CodeFirst\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\Repository_CodeFirst\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="..\Repository_CodeFirst\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\Repository_CodeFirst\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -201,28 +201,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\ContainerConfigurer.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AutoriApiController.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AutoriController.cs" />
     <Compile Include="Controllers\CartiController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\UtilizatorController.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Api\AutorApiModel.cs" />
     <Compile Include="Models\AutorViewModel.cs" />
     <Compile Include="Models\CarteViewModel.cs" />
-    <Compile Include="Models\CategorieViewModel.cs" />
-    <Compile Include="Models\TipAbonamentViewModel.cs" />
-    <Compile Include="Models\UtilizatorViewModel.cs" />
-    <Compile Include="Models\IstoricCitireViewModel.cs" />
-    <Compile Include="Models\LoginViewModel.cs" />
-    <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -288,22 +277,6 @@
     <Content Include="Views\AutoriApi\Delete.cshtml" />
     <Content Include="Views\Carti\Delete.cshtml" />
     <Content Include="Views\Autori\Delete.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Admin\Categorie.cshtml" />
-    <Content Include="Views\Admin\Carte.cshtml" />
-    <Content Include="Views\Admin\CreateCategorie.cshtml" />
-    <Content Include="Views\Admin\CreateCarte.cshtml" />
-    <Content Include="Views\Admin\EditCategorie.cshtml" />
-    <Content Include="Views\Admin\EditCarte.cshtml" />
-    <Content Include="Views\Admin\DeleteCategorie.cshtml" />
-    <Content Include="Views\Admin\DeleteCarte.cshtml" />
-    <Content Include="Views\Utilizator\Index.cshtml" />
-    <Content Include="Views\Utilizator\Carti.cshtml" />
-    <Content Include="Views\Utilizator\DetaliiCarte.cshtml" />
-    <Content Include="Views\Utilizator\Istoric.cshtml" />
-    <Content Include="Views\Utilizator\Profil.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

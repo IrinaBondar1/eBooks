@@ -1,4 +1,4 @@
-using LibrarieModele;
+﻿using LibrarieModele;
 
 using System;
 using System.Collections.Generic;
@@ -15,6 +15,5 @@ namespace NivelServicii
         void Add(Carte carte);
         void Update(Carte carte);
         void Delete(int id);
-        void SoftDelete(int id);
     }
 }

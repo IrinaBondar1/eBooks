@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -17,22 +17,9 @@
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                    @if (Session["UtilizatorId"] != null)
-                    {
-                        <li>@Html.ActionLink("Planuri", "Index", "Utilizator", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Carti", "Carti", "Utilizator", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Profil", "Profil", "Utilizator", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Admin", "Index", "Admin", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li class="nav-link">Bun venit, @Session["UtilizatorNume"]! (@Session["TipAbonament"])</li>
-                        <li>@Html.ActionLink("Logout", "Logout", "Account", new { area = "" }, new { @class = "nav-link" })</li>
-                    }
-                    else
-                    {
-                        <li>@Html.ActionLink("Planuri", "Index", "Utilizator", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Login", "Login", "Account", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Inregistrare", "Register", "Account", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Admin", "Index", "Admin", new { area = "" }, new { @class = "nav-link" })</li>
-                    }
+                    <li>@Html.ActionLink("Carti", "Index", "Carti", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Autori", "Index", "Autori", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Carti", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
             </div>
         </div>

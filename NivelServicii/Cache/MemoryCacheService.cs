@@ -1,13 +1,13 @@
-using NivelServicii.Cache;
+﻿using NivelServicii.Cache;
 
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Caching;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace NivelServicii.Cache
 {
@@ -24,15 +24,11 @@ namespace NivelServicii.Cache
 
         public T Get<T>(string key)
         {
-            var jsonString = Cache[key] as string;
-            if (string.IsNullOrEmpty(jsonString))
-                return default(T);
-
-            return JsonConvert.DeserializeObject<T>(jsonString, new JsonSerializerSettings
+            BinaryFormatter bf = new BinaryFormatter();
+            using (var ms = new MemoryStream((byte[])Cache[key]))
             {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                PreserveReferencesHandling = PreserveReferencesHandling.None
-            });
+                return (T)bf.Deserialize(ms);
+            }
         }
 
         public void Set(string key, object data, int? cacheTime = null)
@@ -44,16 +40,12 @@ namespace NivelServicii.Cache
                 AbsoluteExpiration = DateTime.Now.AddMinutes(cacheTime ?? _cacheTime)
             };
 
-            // Folosim JSON serialization în loc de BinaryFormatter
-            // Aceasta este mai sigură pentru obiectele Entity Framework
-            var jsonString = JsonConvert.SerializeObject(data, new JsonSerializerSettings
+            BinaryFormatter bf = new BinaryFormatter();
+            using (var ms = new MemoryStream())
             {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                PreserveReferencesHandling = PreserveReferencesHandling.None,
-                NullValueHandling = NullValueHandling.Ignore
-            });
-
-            Cache.Set(key, jsonString, policy);
+                bf.Serialize(ms, data);
+                Cache.Set(key, ms.ToArray(), policy);
+            }
         }
 
         public bool IsSet(string key) => Cache.Contains(key);

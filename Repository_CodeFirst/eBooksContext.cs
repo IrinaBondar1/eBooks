@@ -13,7 +13,6 @@ namespace Repository_CodeFirst
         public eBooksContext() : base("eBooks")
         {
             this.Configuration.LazyLoadingEnabled = false;
-            Database.SetInitializer<eBooksContext>(null);
         }
 
         public DbSet<Autor> Autori { get; set; }

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using LibrarieModele;
 using Repository_CodeFirst;
@@ -20,29 +20,7 @@ namespace NivelAccessDate
         {
             using (var ctx = new eBooksContext())
             {
-                return ctx.Utilizatori
-                    .Include("TipAbonament")
-                    .FirstOrDefault(u => u.id_utilizator == id);
-            }
-        }
-
-        public Utilizator GetByEmail(string email)
-        {
-            using (var ctx = new eBooksContext())
-            {
-                return ctx.Utilizatori
-                    .Include("TipAbonament")
-                    .FirstOrDefault(u => u.email == email);
-            }
-        }
-
-        public Utilizator GetByEmailAndPassword(string email, string parola)
-        {
-            using (var ctx = new eBooksContext())
-            {
-                return ctx.Utilizatori
-                    .Include("TipAbonament")
-                    .FirstOrDefault(u => u.email == email && u.parola == parola);
+                return ctx.Utilizatori.Find(id);
             }
         }
 
@@ -57,26 +35,9 @@ namespace NivelAccessDate
 
         public void Update(Utilizator utilizator)
         {
-            if (utilizator == null)
-                return;
-
             using (var ctx = new eBooksContext())
             {
-                // Incarca entitatea din context pentru a evita problemele cu relatii
-                var utilizatorDb = ctx.Utilizatori.FirstOrDefault(u => u.id_utilizator == utilizator.id_utilizator);
-                if (utilizatorDb == null)
-                {
-                    throw new System.ArgumentException($"Utilizator cu ID {utilizator.id_utilizator} nu a fost gasit.");
-                }
-
-                // Actualizeaza doar proprietatile necesare, nu intreaga entitate
-                utilizatorDb.nume_utilizator = utilizator.nume_utilizator;
-                utilizatorDb.email = utilizator.email;
-                utilizatorDb.parola = utilizator.parola;
-                utilizatorDb.id_tip_abonament = utilizator.id_tip_abonament;
-                utilizatorDb.carti_citite_luna = utilizator.carti_citite_luna;
-                utilizatorDb.data_inregistrare = utilizator.data_inregistrare;
-                
+                ctx.Entry(utilizator).State = System.Data.Entity.EntityState.Modified;
                 ctx.SaveChanges();
             }
         }

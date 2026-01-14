@@ -95,14 +95,6 @@
     <Compile Include="Migrations\202511260826248_AddIsDeletedToAutor_Live.Designer.cs">
       <DependentUpon>202511260826248_AddIsDeletedToAutor_Live.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202501060000000_AddIsDeletedToCategorieAndCarte.cs" />
-    <Compile Include="Migrations\202501060000000_AddIsDeletedToCategorieAndCarte.Designer.cs">
-      <DependentUpon>202501060000000_AddIsDeletedToCategorieAndCarte.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202501090000000_AddSerieCategorieToCarte.cs" />
-    <Compile Include="Migrations\202501090000000_AddSerieCategorieToCarte.Designer.cs">
-      <DependentUpon>202501090000000_AddSerieCategorieToCarte.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -143,12 +135,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202511260826248_AddIsDeletedToAutor_Live.resx">
       <DependentUpon>202511260826248_AddIsDeletedToAutor_Live.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202501060000000_AddIsDeletedToCategorieAndCarte.resx">
-      <DependentUpon>202501060000000_AddIsDeletedToCategorieAndCarte.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202501090000000_AddSerieCategorieToCarte.resx">
-      <DependentUpon>202501090000000_AddSerieCategorieToCarte.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

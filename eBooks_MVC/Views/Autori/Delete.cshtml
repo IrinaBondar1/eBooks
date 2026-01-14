@@ -1,14 +1,14 @@
-@model eBooks_MVC.Models.AutorViewModel
+﻿@model eBooks_MVC.Models.AutorViewModel
 
-<h2>Confirmare stergere</h2>
+<h2>Confirmare ștergere</h2>
 
-<p>Vrei sa marchezi autorul <strong>@Model.nume_autor</strong> ca inactiv?</p>
+<p>Vrei să marchezi autorul <strong>@Model.nume_autor</strong> ca inactiv?</p>
 
 @using (Html.BeginForm("Delete", "Autori", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.id_autor)
-    <button type="submit" class="btn btn-warning">Stergere logica</button>
-    @Html.ActionLink("Renunta", "Index", null, new { @class = "btn btn-secondary" })
+    <button type="submit" class="btn btn-warning">Ștergere logică</button>
+    @Html.ActionLink("Renunță", "Index", null, new { @class = "btn btn-secondary" })
 }
 

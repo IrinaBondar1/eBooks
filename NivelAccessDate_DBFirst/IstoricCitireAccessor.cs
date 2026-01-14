@@ -1,9 +1,10 @@
-using Repository_CodeFirst;
-using LibrarieModele;
+﻿using Repository_DBFirst;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Data.Entity;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace NivelAccessDate
 {
@@ -11,64 +12,46 @@ namespace NivelAccessDate
     {
         public List<IstoricCitire> GetAll()
         {
-            using (var ctx = new eBooksContext())
+            using (var ctx = new eBooksEntities())
             {
-                return ctx.IstoricCitiri
-                    .Include("Utilizator")
-                    .Include("Carte")
-                    .ToList();
+                return ctx.IstoricCitires.ToList();
             }
         }
 
         public IstoricCitire GetById(int id)
         {
-            using (var ctx = new eBooksContext())
+            using (var ctx = new eBooksEntities())
             {
-                return ctx.IstoricCitiri
-                    .Include("Utilizator")
-                    .Include("Carte")
-                    .FirstOrDefault(i => i.id_istoric == id);
-            }
-        }
-
-        public List<IstoricCitire> GetByUtilizatorId(int idUtilizator)
-        {
-            using (var ctx = new eBooksContext())
-            {
-                return ctx.IstoricCitiri
-                    .Include("Carte")
-                    .Where(i => i.id_utilizator == idUtilizator)
-                    .OrderByDescending(i => i.data_accesare)
-                    .ToList();
+                return ctx.IstoricCitires.Find(id);
             }
         }
 
         public void Add(IstoricCitire istoric)
         {
-            using (var ctx = new eBooksContext())
+            using (var ctx = new eBooksEntities())
             {
-                ctx.IstoricCitiri.Add(istoric);
+                ctx.IstoricCitires.Add(istoric);
                 ctx.SaveChanges();
             }
         }
 
         public void Update(IstoricCitire istoric)
         {
-            using (var ctx = new eBooksContext())
+            using (var ctx = new eBooksEntities())
             {
-                ctx.Entry(istoric).State = EntityState.Modified;
+                ctx.Entry(istoric).State = System.Data.Entity.EntityState.Modified;
                 ctx.SaveChanges();
             }
         }
 
         public void Delete(int id)
         {
-            using (var ctx = new eBooksContext())
+            using (var ctx = new eBooksEntities())
             {
-                var istoric = ctx.IstoricCitiri.Find(id);
+                var istoric = ctx.IstoricCitires.Find(id);
                 if (istoric != null)
                 {
-                    ctx.IstoricCitiri.Remove(istoric);
+                    ctx.IstoricCitires.Remove(istoric);
                     ctx.SaveChanges();
                 }
             }

@@ -1,4 +1,4 @@
-namespace Repository_CodeFirst.Migrations
+﻿namespace Repository_CodeFirst.Migrations
 {
     using System;
     using System.Data.Entity;
@@ -19,25 +19,15 @@ namespace Repository_CodeFirst.Migrations
                 context.TipAbonamente.AddOrUpdate(
                     new LibrarieModele.TipAbonament
                     {
-                        id_tip_abonament = 1,
-                        denumire = "Free",
-                        limita_carti_pe_luna = 3,
+                        denumire = "Basic",
+                        limita_carti_pe_luna = 5,
                         acces_serii_complete = false,
                         permite_descarcare = false
                     },
                     new LibrarieModele.TipAbonament
                     {
-                        id_tip_abonament = 2,
                         denumire = "Premium",
-                        limita_carti_pe_luna = 10,
-                        acces_serii_complete = true,
-                        permite_descarcare = false
-                    },
-                    new LibrarieModele.TipAbonament
-                    {
-                        id_tip_abonament = 3,
-                        denumire = "VIP",
-                        limita_carti_pe_luna = int.MaxValue, // Nelimitat
+                        limita_carti_pe_luna = 15,
                         acces_serii_complete = true,
                         permite_descarcare = true
                     }

@@ -1,5 +1,5 @@
-using Repository_CodeFirst;
-using LibrarieModele;
+﻿using Repository_DBFirst;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,32 +13,32 @@ namespace NivelAccessDate
     {
         public List<TipAbonament> GetAll()
         {
-            using (var ctx = new eBooksContext())
+            using (var ctx = new eBooksEntities())
             {
-                return ctx.TipAbonamente.ToList();
+                return ctx.TipAbonaments.ToList();
             }
         }
 
         public TipAbonament GetById(int id)
         {
-            using (var ctx = new eBooksContext())
+            using (var ctx = new eBooksEntities())
             {
-                return ctx.TipAbonamente.Find(id);
+                return ctx.TipAbonaments.Find(id);
             }
         }
 
         public void Add(TipAbonament tip)
         {
-            using (var ctx = new eBooksContext())
+            using (var ctx = new eBooksEntities())
             {
-                ctx.TipAbonamente.Add(tip);
+                ctx.TipAbonaments.Add(tip);
                 ctx.SaveChanges();
             }
         }
 
         public void Update(TipAbonament tip)
         {
-            using (var ctx = new eBooksContext())
+            using (var ctx = new eBooksEntities())
             {
                 ctx.Entry(tip).State = System.Data.Entity.EntityState.Modified;
                 ctx.SaveChanges();
@@ -47,12 +47,12 @@ namespace NivelAccessDate
 
         public void Delete(int id)
         {
-            using (var ctx = new eBooksContext())
+            using (var ctx = new eBooksEntities())
             {
-                var tip = ctx.TipAbonamente.Find(id);
+                var tip = ctx.TipAbonaments.Find(id);
                 if (tip != null)
                 {
-                    ctx.TipAbonamente.Remove(tip);
+                    ctx.TipAbonaments.Remove(tip);
                     ctx.SaveChanges();
                 }
             }

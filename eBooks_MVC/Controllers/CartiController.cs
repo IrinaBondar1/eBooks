@@ -1,10 +1,8 @@
-using eBooks_MVC.Models;
+﻿using eBooks_MVC.Models;
 
 using LibrarieModele;
 
 using NivelAccessDate;
-using NivelServicii;
-using NivelServicii.Cache;
 
 using Repository_CodeFirst;
 
@@ -20,27 +18,15 @@ namespace eBooks_MVC.Controllers
 {
     public class CartiController : Controller
     {
-        private readonly eBooksContext context = new eBooksContext();
-        private readonly ICarteService carteService;
 
-        public CartiController()
-        {
-            var carteAccessor = new CarteAccessor();
-            var cache = new MemoryCacheService();
-            carteService = new CarteService(carteAccessor, cache);
-        }
+        private readonly eBooksContext context = new eBooksContext();
+        private readonly CarteAccessor carteAccessor = new CarteAccessor();
 
         // GET: Carti
         public ActionResult Index()
         {
-            // Obținem direct din context cu Include-uri pentru detalii complete
-            // Nu folosim cache-ul aici pentru a evita problemele de conversie SQL
-            var cartiCuDetalii = context.Carti
-                .Include("Autor")
-                .Where(c => !c.IsDeleted)
-                .ToList();
-
-            var model = cartiCuDetalii.Select(c => new CarteViewModel
+            var carti = context.Carti.Include("Autor").ToList();
+            var model = carti.Select(c => new CarteViewModel
             {
                 id_carte = c.id_carte,
                 titlu = c.titlu,
@@ -75,17 +61,15 @@ namespace eBooks_MVC.Controllers
                 {
                     titlu = model.titlu,
                     descriere = model.descriere,
-                    id_autor = model.id_autor,
-                    IsDeleted = false
+                    id_autor = model.id_autor
                 };
 
-                // Folosim serviciul pentru adăugare (cu invalidare cache)
-                carteService.Add(carte);
+                context.Carti.Add(carte);
+                context.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             model.Autori = context.Autori
-                .Where(a => !a.IsDeleted)
                 .Select(a => new SelectListItem
                 {
                     Text = a.nume_autor,
@@ -96,14 +80,13 @@ namespace eBooks_MVC.Controllers
         }
 
 
-        // GET: Carti/Delete/5
+        // GET:Autori/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            // Folosim serviciul pentru a obține cartea (cu cache)
-            var carte = carteService.GetById(id.Value);
+            var carte = carteAccessor.GetById(id.Value);
             if (carte == null)
                 return HttpNotFound();
 
@@ -116,13 +99,12 @@ namespace eBooks_MVC.Controllers
 
             return View(model);
         }
-        // POST: Carti/Delete/5
+        // POST: Autori/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            // Folosim serviciul pentru ștergere logică (cu invalidare cache)
-            carteService.SoftDelete(id);
+            carteAccessor.Delete(id); // aici poate fi logic sau fizic
             return RedirectToAction("Index");
         }
     }
