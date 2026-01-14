@@ -1,0 +1,39 @@
+@model IEnumerable<eBooks_MVC.Models.CategorieViewModel>
+
+@{
+    ViewBag.Title = "Gestionare Categorii";
+}
+
+<h2>Gestionare Categorii</h2>
+
+<p>
+    @Html.ActionLink("Adauga categorie noua", "CreateCategorie", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Inapoi la Panou Admin", "Index", null, new { @class = "btn btn-default" })
+</p>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Denumire</th>
+            <th>Descriere</th>
+            <th>Actiuni</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var categorie in Model)
+        {
+            <tr>
+                <td>@categorie.id_categorie</td>
+                <td>@categorie.denumire</td>
+                <td>@(string.IsNullOrEmpty(categorie.descriere) ? "-" : categorie.descriere)</td>
+                <td>
+                    @Html.ActionLink("Editeaza", "EditCategorie", new { id = categorie.id_categorie }, new { @class = "btn btn-warning btn-sm" })
+                    @Html.Raw(" ")
+                    @Html.ActionLink("Sterge", "DeleteCategorie", new { id = categorie.id_categorie }, new { @class = "btn btn-danger btn-sm" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

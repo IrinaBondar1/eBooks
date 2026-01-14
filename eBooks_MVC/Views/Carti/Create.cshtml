@@ -1,4 +1,4 @@
-﻿@model eBooks_MVC.Models.CarteViewModel
+@model eBooks_MVC.Models.CarteViewModel
 
 
 
@@ -30,7 +30,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.id_autor, "Autor", new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(m => m.id_autor, Model.Autori, "Selectează autorul", new { @class = "form-control" }
+            @Html.DropDownListFor(m => m.id_autor, Model.Autori, "Selecteaza autorul", new { @class = "form-control" }
             )
             @Html.ValidationMessageFor(m => m.id_autor)
         </div>
@@ -39,7 +39,7 @@
    
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Salvează" class="btn btn-success" />
+            <input type="submit" value="Salveaza" class="btn btn-success" />
         </div>
     </div>
 </div>

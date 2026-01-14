@@ -13,7 +13,7 @@ namespace NivelAccessDate
         {
             using (var ctx = new eBooksContext())
             {
-                return ctx.Categorii.ToList();
+                return ctx.Categorii.Where(c => !c.IsDeleted).ToList();
             }
         }
 
@@ -21,7 +21,8 @@ namespace NivelAccessDate
         {
             using (var ctx = new eBooksContext())
             {
-                return ctx.Categorii.Find(id);
+                var categorie = ctx.Categorii.Find(id);
+                return categorie != null && !categorie.IsDeleted ? categorie : null;
             }
         }
 
@@ -51,6 +52,19 @@ namespace NivelAccessDate
                 if (categorie != null)
                 {
                     ctx.Categorii.Remove(categorie);
+                    ctx.SaveChanges();
+                }
+            }
+        }
+
+        public void SoftDelete(int id)
+        {
+            using (var ctx = new eBooksContext())
+            {
+                var categorie = ctx.Categorii.Find(id);
+                if (categorie != null)
+                {
+                    categorie.IsDeleted = true;
                     ctx.SaveChanges();
                 }
             }

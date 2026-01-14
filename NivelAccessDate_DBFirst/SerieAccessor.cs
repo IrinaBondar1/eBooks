@@ -1,11 +1,9 @@
-﻿using Repository_DBFirst;
-
+using Repository_CodeFirst;
+using LibrarieModele;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Data.Entity;
-using System.Threading.Tasks;
 
 namespace NivelAccessDate
 {
@@ -13,46 +11,46 @@ namespace NivelAccessDate
     {
         public List<Serie> GetAll()
         {
-            using (var ctx = new eBooksEntities())
+            using (var ctx = new eBooksContext())
             {
-                return ctx.Series.ToList();
+                return ctx.Serii.ToList();
             }
         }
 
         public Serie GetById(int id)
         {
-            using (var ctx = new eBooksEntities())
+            using (var ctx = new eBooksContext())
             {
-                return ctx.Series.Find(id);
+                return ctx.Serii.Find(id);
             }
         }
 
         public void Add(Serie serie)
         {
-            using (var ctx = new eBooksEntities())
+            using (var ctx = new eBooksContext())
             {
-                ctx.Series.Add(serie);
+                ctx.Serii.Add(serie);
                 ctx.SaveChanges();
             }
         }
 
         public void Update(Serie serie)
         {
-            using (var ctx = new eBooksEntities())
+            using (var ctx = new eBooksContext())
             {
-                ctx.Entry(serie).State = System.Data.Entity.EntityState.Modified;
+                ctx.Entry(serie).State = EntityState.Modified;
                 ctx.SaveChanges();
             }
         }
 
         public void Delete(int id)
         {
-            using (var ctx = new eBooksEntities())
+            using (var ctx = new eBooksContext())
             {
-                var serie = ctx.Series.Find(id);
+                var serie = ctx.Serii.Find(id);
                 if (serie != null)
                 {
-                    ctx.Series.Remove(serie);
+                    ctx.Serii.Remove(serie);
                     ctx.SaveChanges();
                 }
             }

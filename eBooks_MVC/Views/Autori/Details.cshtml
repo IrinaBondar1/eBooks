@@ -1,4 +1,4 @@
-﻿@model eBooks_MVC.Models.AutorViewModel
+@model eBooks_MVC.Models.AutorViewModel
 
 @{
     ViewBag.Title = "Detalii autor";
@@ -10,10 +10,10 @@
     <h4>@Model.nume_autor</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>Țara</dt>
+        <dt>Tara</dt>
         <dd>@Model.tara_origine</dd>
 
-        <dt>Data nașterii</dt>
+        <dt>Data nasterii</dt>
         <dd>@Model.data_nasterii.ToShortDateString()</dd>
 
         <dt>Activ</dt>
@@ -22,5 +22,5 @@
 </div>
 
 <p>
-    @Html.ActionLink("Înapoi la listă", "Index")
+    @Html.ActionLink("Inapoi la lista", "Index")
 </p>

@@ -1,12 +1,12 @@
-﻿@model IEnumerable<eBooks_MVC.Models.AutorViewModel>
+@model IEnumerable<eBooks_MVC.Models.AutorViewModel>
 
 <table class="table table-striped table-bordered">
     <thead>
         <tr>
             <th>Nume autor</th>
-            <th>Țara</th>
-            <th>Data nașterii</th>
-            <th>Acțiuni</th> 
+            <th>Tara</th>
+            <th>Data nasterii</th>
+            <th>Actiuni</th> 
         </tr>
     </thead>
     <tbody>
@@ -19,9 +19,9 @@
                 <td>
                     @Html.ActionLink("Detalii", "Details", new { id = autor.id_autor }, new { @class = "btn btn-info btn-sm" })
                     @Html.Raw(" ")
-                    @Html.ActionLink("Editează", "Edit", new { id = autor.id_autor }, new { @class = "btn btn-warning btn-sm" })
+                    @Html.ActionLink("Editeaza", "Edit", new { id = autor.id_autor }, new { @class = "btn btn-warning btn-sm" })
                     @Html.Raw(" ")
-                    @Html.ActionLink("Șterge", "Delete", new { id = autor.id_autor }, new { @class = "btn btn-danger btn-sm" })
+                    @Html.ActionLink("Sterge", "Delete", new { id = autor.id_autor }, new { @class = "btn btn-danger btn-sm" })
                 </td>
             </tr>
         }

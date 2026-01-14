@@ -1,33 +1,224 @@
-﻿@{
-    ViewBag.Title = "Carti Page";
+@model eBooks_MVC.Controllers.HomeStatisticsViewModel
+
+@{
+    ViewBag.Title = "Pagina Principala - eBooks";
 }
 
 <main>
     <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
+        <h1 id="title">Bun venit la eBooks!</h1>
+        <p class="lead">Biblioteca ta digitala cu mii de carti disponibile. Descopera, citeste, exploreaza!</p>
     </section>
 
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </section>
+    <!-- Statistici Generale -->
+    <div class="row" style="margin-top: 30px;">
+        <div class="col-md-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Total Carti</h3>
+                </div>
+                <div class="panel-body">
+                    <h2 style="margin: 0;">@Model.TotalCarti</h2>
+                    <p>Carti disponibile in biblioteca</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Total Autori</h3>
+                </div>
+                <div class="panel-body">
+                    <h2 style="margin: 0;">@Model.TotalAutori</h2>
+                    <p>Autori in catalog</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Total Categorii</h3>
+                </div>
+                <div class="panel-body">
+                    <h2 style="margin: 0;">@Model.TotalCategorii</h2>
+                    <p>Categorii de carti</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Total Utilizatori</h3>
+                </div>
+                <div class="panel-body">
+                    <h2 style="margin: 0;">@Model.TotalUtilizatori</h2>
+                    <p>Membri activi</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Carti Recente -->
+    <div class="row" style="margin-top: 30px;">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Carti Recente</h3>
+                </div>
+                <div class="panel-body">
+                    @if (Model.CartiRecente != null && Model.CartiRecente.Any())
+                    {
+                        <ul class="list-group">
+                            @foreach (var carte in Model.CartiRecente)
+                            {
+                                <li class="list-group-item">
+                                    <strong>@carte.titlu</strong>
+                                    @if (Session["UtilizatorId"] != null && carte.id_carte > 0)
+                                    {
+                                        <span class="pull-right">
+                                            <a href="@Url.Action("DetaliiCarte", "Utilizator", new { id = carte.id_carte })" class="btn btn-xs btn-primary">Detalii</a>
+                                        </span>
+                                    }
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p>Nu exista carti recente.</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Carti Populare -->
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Carti Populare</h3>
+                </div>
+                <div class="panel-body">
+                    @if (Model.CartiPopulare != null && Model.CartiPopulare.Any())
+                    {
+                        <ul class="list-group">
+                            @foreach (var carte in Model.CartiPopulare)
+                            {
+                                <li class="list-group-item">
+                                    <strong>@carte.titlu</strong>
+                                    @if (Session["UtilizatorId"] != null && carte.id_carte > 0)
+                                    {
+                                        <span class="pull-right">
+                                            <a href="@Url.Action("DetaliiCarte", "Utilizator", new { id = carte.id_carte })" class="btn btn-xs btn-primary">Detalii</a>
+                                        </span>
+                                    }
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p>Nu exista statistici de popularitate.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Autori si Categorii -->
+    <div class="row" style="margin-top: 30px;">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Autori</h3>
+                </div>
+                <div class="panel-body">
+                    @if (Model.AutoriPopulari != null && Model.AutoriPopulari.Any())
+                    {
+                        <ul class="list-group">
+                            @foreach (var autor in Model.AutoriPopulari)
+                            {
+                                <li class="list-group-item">
+                                    <strong>@autor.nume_autor</strong>
+                                    @if (!string.IsNullOrEmpty(autor.tara_origine))
+                                    {
+                                        <span class="text-muted">(@autor.tara_origine)</span>
+                                    }
+                                    <span class="pull-right">
+                                        @Html.ActionLink("Detalii", "Details", "Autori", new { id = autor.id_autor }, new { @class = "btn btn-xs btn-info" })
+                                    </span>
+                                </li>
+                            }
+                        </ul>
+                        <p style="margin-top: 10px;">
+                            @Html.ActionLink("Vezi toti autorii", "Index", "Autori", null, new { @class = "btn btn-default" })
+                        </p>
+                    }
+                    else
+                    {
+                        <p>Nu exista autori.</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Categorii</h3>
+                </div>
+                <div class="panel-body">
+                    @if (Model.Categorii != null && Model.Categorii.Any())
+                    {
+                        <ul class="list-group">
+                            @foreach (var categorie in Model.Categorii)
+                            {
+                                <li class="list-group-item">
+                                    <strong>@categorie.denumire</strong>
+                                    @if (!string.IsNullOrEmpty(categorie.descriere))
+                                    {
+                                        <br />
+                                        <small class="text-muted">@categorie.descriere</small>
+                                    }
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p>Nu exista categorii.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Actiuni Rapide -->
+    <div class="row" style="margin-top: 30px;">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Actiuni Rapide</h3>
+                </div>
+                <div class="panel-body">
+                    @if (Session["UtilizatorId"] == null)
+                    {
+                        <p>Pentru a accesa toate functionalitatile, va rugam sa va autentificati sau sa va inregistrati.</p>
+                        <p>
+                            @Html.ActionLink("Autentificare", "Login", "Account", null, new { @class = "btn btn-primary" })
+                            @Html.ActionLink("Inregistrare", "Register", "Account", null, new { @class = "btn btn-success" })
+                            @Html.ActionLink("Vezi Planuri", "Index", "Utilizator", null, new { @class = "btn btn-info" })
+                        </p>
+                    }
+                    else
+                    {
+                        <p>
+                            @Html.ActionLink("Vezi Carti Disponibile", "Carti", "Utilizator", null, new { @class = "btn btn-primary" })
+                            @Html.ActionLink("Profilul Meu", "Profil", "Utilizator", null, new { @class = "btn btn-info" })
+                            @Html.ActionLink("Istoric Citiri", "Istoric", "Utilizator", null, new { @class = "btn btn-default" })
+                        </p>
+                    }
+                </div>
+            </div>
+        </div>
     </div>
 </main>

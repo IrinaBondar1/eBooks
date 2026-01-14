@@ -4,6 +4,7 @@ using LibrarieModele;
 using NivelAccessDate;
 
 using NivelServicii;
+using NivelServicii.Cache;
 
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,13 @@ namespace eBooks_MVC.Controllers
     public class AutoriController : Controller
     {
         private readonly IAutorService autorService;
+
+        public AutoriController()
+        {
+            var autorAccessor = new AutorAccessor();
+            var cache = new MemoryCacheService();
+            autorService = new AutorService(autorAccessor, cache);
+        }
 
         // GET: Autori
         public ActionResult Index()

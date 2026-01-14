@@ -1,0 +1,50 @@
+@model eBooks_MVC.Models.CarteViewModel
+
+@{
+    ViewBag.Title = "Sterge Carte";
+}
+
+<h2>Confirmare stergere carte</h2>
+
+<div class="alert alert-warning">
+    <strong>Atentie!</strong> Aceasta actiune va marca cartea ca stearsa logic (soft delete).
+</div>
+
+<div>
+    <h4>Detalii carte</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.titlu)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.titlu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.descriere)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.descriere)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nume_autor)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.nume_autor)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.id_carte)
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Sterge" class="btn btn-danger" />
+            @Html.ActionLink("Anuleaza", "Carte", null, new { @class = "btn btn-default" })
+        </div>
+    }
+</div>
+

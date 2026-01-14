@@ -1,0 +1,75 @@
+@model IEnumerable<eBooks_MVC.Models.CarteViewModel>
+
+@{
+    ViewBag.Title = "Carti Disponibile";
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-warning alert-dismissible fade in" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        @TempData["Error"]
+    </div>
+}
+
+@if (ViewBag.CanReadMore != null && !(bool)ViewBag.CanReadMore)
+{
+    <div class="alert alert-danger">
+        <strong>Atentie!</strong> Ati atins limita de carti pentru aceasta luna. Upgrade la Premium sau VIP pentru mai multe carti!
+    </div>
+}
+
+<h2>Carti Disponibile</h2>
+
+@if (ViewBag.CurrentUser != null)
+{
+    var user = ViewBag.CurrentUser as LibrarieModele.Utilizator;
+    <div class="alert alert-info">
+        <strong>Plan curent:</strong> @(user != null && user.TipAbonament != null ? user.TipAbonament.denumire : "Free") - 
+        @if (user != null && user.TipAbonament != null && user.TipAbonament.denumire == "VIP")
+        {
+            <span>Acces nelimitat</span>
+        }
+        else
+        {
+            <span>@(user != null ? user.carti_citite_luna : 0) / @(user != null && user.TipAbonament != null ? user.TipAbonament.limita_carti_pe_luna.ToString() : "3") carti citite luna curenta</span>
+        }
+    </div>
+}
+
+<p>
+    @Html.ActionLink("Planuri de Abonament", "Index", "Utilizator", null, new { @class = "btn btn-info" })
+    @Html.ActionLink("Profil", "Profil", "Utilizator", null, new { @class = "btn btn-default" })
+</p>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Titlu</th>
+            <th>Autor</th>
+            <th>Descriere</th>
+            <th>Actiuni</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var carte in Model)
+        {
+            <tr>
+                <td>
+                    @carte.titlu
+                    @if (!string.IsNullOrEmpty(carte.nume_serie))
+                    {
+                        <small class="text-muted">(@carte.nume_serie@(carte.nr_volum.HasValue ? " Vol. " + carte.nr_volum.ToString() : ""))</small>
+                    }
+                </td>
+                <td>@carte.nume_autor</td>
+                <td>@(string.IsNullOrEmpty(carte.descriere) ? "-" : (carte.descriere.Length > 100 ? carte.descriere.Substring(0, 100) + "..." : carte.descriere))</td>
+                <td>
+                    @Html.ActionLink("Detalii", "DetaliiCarte", "Utilizator", new { id = carte.id_carte }, new { @class = "btn btn-info btn-sm" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

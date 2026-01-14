@@ -36,9 +36,7 @@ namespace NivelServicii
                 }
             logger.Info("AUTORI : date luate din BD");
 
-            var autori = autorAccessor.GetAll()
-                            .Where(a => !a.IsDeleted) 
-                            .ToList();
+            var autori = autorAccessor.GetAll().ToList();
                 cache.Set(cacheKey, autori); 
                 return autori;
             }

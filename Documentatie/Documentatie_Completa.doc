@@ -1,0 +1,168 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Documentație proiect – eBooks</title>
+<!--[if gte mso 9]>
+<xml>
+<w:WordDocument>
+<w:View>Print</w:View>
+<w:Zoom>100</w:Zoom>
+<w:DoNotOptimizeForBrowser/>
+</w:WordDocument>
+</xml>
+<![endif]-->
+<style>
+@page { size: A4; margin: 2.5cm; }
+body { font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.5; text-align: justify; }
+h1 { font-size: 18pt; font-weight: bold; text-align: center; margin: 18pt 0; page-break-before: always; }
+h1:first-of-type { page-break-before: avoid; }
+h2 { font-size: 14pt; font-weight: bold; margin: 14pt 0 8pt 0; border-bottom: 1px solid #ccc; padding-bottom: 4pt; }
+h3 { font-size: 12pt; font-weight: bold; margin: 12pt 0 6pt 0; }
+p { margin: 0 0 10pt 0; text-indent: 1cm; }
+p.noindent { text-indent: 0; }
+ul, ol { margin: 0 0 10pt 1cm; }
+li { margin: 0 0 4pt 0; }
+table { border-collapse: collapse; width: 100%; margin: 10pt 0; font-size: 11pt; }
+th, td { border: 1px solid #000; padding: 6pt 8pt; text-align: left; }
+th { background: #f0f0f0; }
+code, pre { font-family: "Courier New", Courier, monospace; font-size: 10pt; }
+pre { background: #f7f7f7; border: 1px solid #ddd; padding: 10pt; white-space: pre-wrap; }
+.toc { border: 1px solid #ddd; background: #fafafa; padding: 12pt; margin: 12pt 0; }
+.toc p { text-indent: 0; margin: 0 0 4pt 0; }
+</style>
+</head>
+<body>
+
+<h1>Documentație proiect – eBooks (MVC + Web API + EF)</h1>
+
+<div class="toc">
+  <p><strong>Cuprins</strong></p>
+  <p>1. Proiectare</p>
+  <p style="margin-left:1cm;">1.1 Paradigme utilizate</p>
+  <p style="margin-left:1cm;">1.2 De ce au fost alese?</p>
+  <p style="margin-left:1cm;">1.3 Arhitectura aplicației</p>
+  <p>2. Implementare</p>
+  <p style="margin-left:1cm;">2.1 Business layer – explicat</p>
+  <p style="margin-left:1cm;">2.2 Librării suplimentare utilizate</p>
+  <p style="margin-left:1cm;">2.3 Secțiuni de cod / abordări deosebite</p>
+  <p>3. Utilizare</p>
+  <p style="margin-left:1cm;">3.1 Pașii de instalare</p>
+  <p style="margin-left:2cm;">3.1.1 Pentru programator</p>
+  <p style="margin-left:2cm;">3.1.2 La beneficiar</p>
+  <p style="margin-left:1cm;">3.2 Mod de utilizare</p>
+</div>
+
+<h2>1. Proiectare</h2>
+
+<h3>1.1 Paradigme utilizate (MVC, API, ORM Code First, ORM Database First etc.)</h3>
+<p class="noindent">Aplicația <strong>eBooks</strong> este construită în ecosistemul <strong>ASP.NET (.NET Framework 4.7.2)</strong> și implementează mai multe paradigme/pattern-uri, pentru a separa responsabilitățile și a face proiectul ușor de extins:</p>
+<ul>
+  <li><strong>MVC (Model–View–Controller)</strong>: partea de interfață web este implementată în proiectul <code>eBooks_MVC</code> (Controllers, Views Razor și ViewModels).</li>
+  <li><strong>Web API (REST)</strong>: aplicația expune și un API în proiectul <code>eBooks_API</code> prin controllere Web API (<code>ApiController</code>).</li>
+  <li><strong>ORM – Entity Framework 6 (Code First)</strong>: entități POCO în <code>Repository_CodeFirst/LibrarieModele</code>, context în <code>Repository_CodeFirst/eBooksContext.cs</code>, migrații în <code>Repository_CodeFirst/Migrations</code>.</li>
+  <li><strong>ORM – Entity Framework 6 (Database First)</strong>: model DB-First în <code>Repository_DBFirst/eBooks.edmx</code> + clase generate în <code>Repository_DBFirst</code>.</li>
+  <li><strong>Service Layer (Business layer)</strong>: reguli de business și comportamente comune sunt grupate în <code>NivelServicii</code>.</li>
+  <li><strong>Dependency Injection (IoC)</strong>: în <code>eBooks_API</code> este configurat Autofac; în <code>eBooks_MVC</code> există suport pregătit, dar lăsat dezactivat (comentat).</li>
+</ul>
+
+<h3>1.2 De ce au fost alese?</h3>
+<ul>
+  <li><strong>MVC</strong>: separare UI/logică/date, suport nativ pentru formulare, validare și ecrane administrative.</li>
+  <li><strong>Web API</strong>: acces programatic la resurse, integrare ușoară cu clienți externi, JSON.</li>
+  <li><strong>Entity Framework (ORM)</strong>: mapare obiecte–tabele, LINQ, reducerea SQL-ului scris manual.</li>
+  <li><strong>Code First</strong>: migrații versionate, control asupra modelului în cod, seed data pentru planuri.</li>
+  <li><strong>Database First</strong>: demonstrarea abordării „pornești de la DB”, util când schema e preexistentă.</li>
+  <li><strong>Service Layer</strong>: logică de business centralizată, reuse, caching/logging, controllere mai simple.</li>
+  <li><strong>DI</strong>: decuplare, configurare centralizată, posibilitate de testare și înlocuire implementări.</li>
+</ul>
+
+<h3>1.3 Arhitectura aplicației</h3>
+<p class="noindent"><strong>Straturi/proiecte:</strong></p>
+<ul>
+  <li><strong>Presentation</strong>: <code>eBooks_MVC</code> (UI) și <code>eBooks_API</code> (REST)</li>
+  <li><strong>Business</strong>: <code>NivelServicii</code> (Services + Cache)</li>
+  <li><strong>Data Access</strong>: <code>NivelAccessDate_DBFirst</code> (Accessors)</li>
+  <li><strong>Data/ORM</strong>: <code>Repository_CodeFirst</code> și <code>Repository_DBFirst</code></li>
+  <li><strong>Model</strong>: <code>Repository_CodeFirst/LibrarieModele</code></li>
+</ul>
+<p class="noindent"><strong>Flux general (MVC):</strong> Browser → Controller MVC → Service (business/cache) → Accessor → EF (DbContext) → SQL Server → View.</p>
+<p class="noindent"><strong>Flux general (API):</strong> Client → Controller API → (Service/Accessor) → EF → SQL Server → JSON.</p>
+
+<h2>2. Implementare</h2>
+
+<h3>2.1 Business layer (Nivelul Services) – explicat</h3>
+<p class="noindent">Business layer este implementat în proiectul <code>NivelServicii</code> și centralizează regulile de business, caching, invalidare cache și logging.</p>
+<ul>
+  <li><strong>CarteService</strong> (<code>CarteService.cs</code>): <code>GetAll/GetById</code> cu cache, <code>Add/Update/Delete/SoftDelete</code> cu invalidare cache.</li>
+  <li><strong>AutorService</strong> (<code>AutorService.cs</code>): cache pentru listă și pentru autor individual + invalidare.</li>
+  <li><strong>AccesService</strong> (<code>AccesService.cs</code>): reguli Free/Premium/VIP (limită lunară, serii, download) + istoric și increment contor.</li>
+</ul>
+<p class="noindent"><strong>Pagina principală</strong> folosește servicii pentru statistici (ex. total cărți/autori) și liste (cărți recente/populare).</p>
+
+<h3>2.2 Librării suplimentare utilizate</h3>
+<ul>
+  <li><strong>EntityFramework</strong> – ORM</li>
+  <li><strong>Autofac</strong> – Dependency Injection (în API)</li>
+  <li><strong>NLog</strong> – logging</li>
+  <li><strong>Newtonsoft.Json</strong> – JSON (inclusiv pentru cache)</li>
+  <li><strong>AutoMapper</strong> – mapping entități/DTO (în API)</li>
+  <li><strong>Bootstrap, jQuery, jQuery.Validation</strong> – UI și validare client-side</li>
+</ul>
+
+<h3>2.3 Secțiuni de cod / abordări deosebite</h3>
+<ul>
+  <li><strong>Soft Delete</strong>: câmp <code>IsDeleted</code> + filtrare în interogări + metode <code>SoftDelete</code> în Accessors/Services.</li>
+  <li><strong>Cache</strong>: <code>ICache</code> + <code>MemoryCacheService</code>, invalidare după modificări.</li>
+  <li><strong>Logging</strong>: NLog în servicii pentru cache hit/miss, reguli de acces, erori.</li>
+  <li><strong>Validare acces</strong> server-side: verificare repetată în listare/detalii/POST (nu doar în UI).</li>
+  <li><strong>Upgrade plan</strong>: logică de upgrade (fără downgrade) și actualizare Session.</li>
+</ul>
+
+<h2>3. Utilizare</h2>
+
+<h3>3.1 Pașii de instalare</h3>
+
+<h3>3.1.1 Instalare și configurare pentru programator</h3>
+<p class="noindent"><strong>Prerechizite:</strong> Visual Studio, .NET Framework 4.7.2, SQL Server + opțional SSMS.</p>
+<ol>
+  <li>Deschide proiectul <code>eBooks_MVC</code> în Visual Studio.</li>
+  <li>Restore NuGet Packages.</li>
+  <li>Verifică/actualizează connection string în <code>eBooks_MVC/Web.config</code> și <code>eBooks_API/Web.config</code>.</li>
+  <li>Creează DB <code>eBooks</code> și aplică schema:
+    <ul>
+      <li>recomandat: rulează <code>ApplyAllMigrations.sql</code> în SSMS</li>
+      <li>alternativ: <code>Update-Database -ProjectName Repository_CodeFirst -ConfigurationTypeName Repository_CodeFirst.Migrations.Configuration</code></li>
+    </ul>
+  </li>
+  <li>Setează <code>eBooks_MVC</code> ca StartUp Project și rulează (F5).</li>
+</ol>
+
+<h3>3.1.2 Instalare și configurare la beneficiar</h3>
+<p class="noindent"><strong>Prerechizite beneficiar:</strong> IIS + ASP.NET 4.x, .NET Framework 4.7.2, SQL Server.</p>
+<ol>
+  <li>Creează baza de date <code>eBooks</code> și rulează <code>ApplyAllMigrations.sql</code>.</li>
+  <li>Publică aplicația din Visual Studio (Publish) și copiază fișierele pe server.</li>
+  <li>Configurează site-ul în IIS (App Pool .NET v4.0, Integrated).</li>
+  <li>Actualizează <code>Web.config</code> cu connection string către DB.</li>
+  <li>Accesează URL-ul și verifică funcționalitățile de bază (Register/Login/Carti/Profil/Admin).</li>
+</ol>
+
+<h3>3.2 Mod de utilizare</h3>
+<ul>
+  <li><strong>Home</strong> (<code>/</code>): statistici și liste (cărți recente/populare).</li>
+  <li><strong>Planuri</strong> (<code>/Utilizator</code>): Free/Premium/VIP și funcționalități.</li>
+  <li><strong>Autentificare</strong>: <code>/Account/Register</code>, <code>/Account/Login</code>, <code>/Account/Logout</code>.</li>
+  <li><strong>Cărți</strong> (<code>/Utilizator/Carti</code>): listă filtrată după plan.</li>
+  <li><strong>Detalii</strong> (<code>/Utilizator/DetaliiCarte/{id}</code>): buton Citește + Download (VIP).</li>
+  <li><strong>Profil</strong> (<code>/Utilizator/Profil</code>): consum lunar + upgrade plan.</li>
+  <li><strong>Istoric</strong> (<code>/Utilizator/Istoric</code>): acțiuni citire/descărcare.</li>
+  <li><strong>Admin</strong> (<code>/Admin</code>): CRUD Carte + Categorie (ștergere logică).</li>
+  <li><strong>API</strong>: ex. <code>/api/Carti</code>, <code>/api/Carti/{id}</code>, <code>/api/Autori</code>.</li>
+</ul>
+
+</body>
+</html>
+

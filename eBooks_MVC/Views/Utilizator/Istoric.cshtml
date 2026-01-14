@@ -1,0 +1,42 @@
+@model IEnumerable<eBooks_MVC.Models.IstoricCitireViewModel>
+
+@{
+    ViewBag.Title = "Istoric Citire";
+}
+
+<h2>Istoric Citire</h2>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.First().titlu_carte)</th>
+                <th>@Html.DisplayNameFor(model => model.First().data_accesare)</th>
+                <th>@Html.DisplayNameFor(model => model.First().actiune)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.titlu_carte</td>
+                    <td>@item.data_accesare.ToString("dd.MM.yyyy HH:mm")</td>
+                    <td>@item.actiune</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info">
+        Nu exista inregistrari in istoricul de citire.
+    </div>
+}
+
+<p>
+    @Html.ActionLink("Planuri", "Index", "Utilizator", null, new { @class = "btn btn-info" })
+    @Html.ActionLink("Carti", "Carti", "Utilizator", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Inapoi", "Index", "Carti", null, new { @class = "btn btn-default" })
+</p>

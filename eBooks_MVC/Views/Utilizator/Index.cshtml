@@ -1,0 +1,95 @@
+@model IEnumerable<eBooks_MVC.Models.TipAbonamentViewModel>
+
+@{
+    ViewBag.Title = "Planuri de Abonament";
+}
+
+<h2>Planuri de Abonament Disponibile</h2>
+
+<div class="row">
+    @foreach (var plan in Model)
+    {
+        <div class="col-md-6" style="margin-bottom: 20px;">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">@plan.denumire</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-unstyled">
+                        <li>
+                            <strong>Limita carti pe luna:</strong> 
+                            @if (plan.limita_carti_pe_luna == -1)
+                            {
+                                <span class="text-success">Nelimitat (VIP)</span>
+                            }
+                            else
+                            {
+                                @plan.limita_carti_pe_luna
+                            }
+                        </li>
+                        <li>
+                            <strong>Acces serii complete:</strong>
+                            @if (plan.acces_serii_complete)
+                            {
+                                <span class="text-success"><strong>[DA]</strong></span>
+                            }
+                            else
+                            {
+                                <span class="text-danger"><strong>[NU]</strong></span>
+                            }
+                        </li>
+                        <li>
+                            <strong>Permite descarcare:</strong>
+                            @if (plan.permite_descarcare)
+                            {
+                                <span class="text-success"><strong>[DA] (VIP)</strong></span>
+                            }
+                            else
+                            {
+                                <span class="text-danger"><strong>[NU]</strong></span>
+                            }
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@if (Session["UtilizatorId"] == null)
+{
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-md-12">
+            <div class="alert alert-info">
+                <h4>Pentru a accesa cartile, va rugam sa va autentificati sau sa va creati un cont!</h4>
+            </div>
+            @Html.ActionLink("Autentificare", "Login", "Account", null, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Inregistrare", "Register", "Account", null, new { @class = "btn btn-success" })
+        </div>
+    </div>
+}
+else
+{
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-md-12">
+            @Html.ActionLink("Vezi Carti Disponibile", "Carti", "Utilizator", null, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Profil", "Profil", "Utilizator", null, new { @class = "btn btn-default" })
+        </div>
+    </div>
+}
+
+@if (ViewBag.CurrentPlanId != null)
+{
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-md-12">
+            @{ var currentPlanId = (int)ViewBag.CurrentPlanId; }
+            @if (currentPlanId < 3)
+            {
+                <div class="alert alert-warning">
+                    <strong>Upgrade disponibil!</strong> Puteti face upgrade la un plan superior pentru mai multe functionalitati.
+                    @Html.ActionLink("Vezi profilul", "Profil", "Utilizator", null, new { @class = "btn btn-warning btn-sm" })
+                </div>
+            }
+        </div>
+    </div>
+}
